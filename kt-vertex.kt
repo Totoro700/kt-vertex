@@ -1,5 +1,3 @@
-const val CODE_VERSION = "1.0.0"
-
 class Vertex2d(xPos: Double, yPos: Double) {
     var x: Double
         get() = field
@@ -7,7 +5,7 @@ class Vertex2d(xPos: Double, yPos: Double) {
         get() = field
 
     fun getFormattedVertex(): String {
-        return "[" + String.format("%.2f", x) + ", " + String.format("%.2f", y) + "]"
+        return "[" + String.format("%.2f", x).trimEnd('0').trimEnd('.') + ", " + String.format("%.2f", y).trimEnd('0').trimEnd('.') + "]"
     }
 
     fun translate(xs: Double, ys: Double) {
@@ -72,7 +70,7 @@ class Vertex3d(xPos: Double, yPos: Double, zPos: Double) {
         get() = field
 
     fun getFormattedVertex(): String {
-        return "[" + String.format("%.2f", x) + ", " + String.format("%.2f", y) + ", " + String.format("%.2f", z) + "]"
+        return "[" + String.format("%.2f", x).trimEnd('0').trimEnd('.') + ", " + String.format("%.2f", y).trimEnd('0').trimEnd('.') + ", " + String.format("%.2f", z).trimEnd('0').trimEnd('.') + "]"
     }
 
     fun translate(xs: Double, ys: Double, zs: Double) {
@@ -142,7 +140,8 @@ var USER_VERTEX_3D: Vertex3d = Vertex3d(6.9, 6.9, 6.9)
 var RUNTIME_VERTEX_TYPE: Int = 0
 
 fun main() {
-    println("kt_vertex $CODE_VERSION")
+    println("kt_vertex by totoro700")
+    println("Have fun :)")
     println("Enter a vertex")
     println("Format: vertex2d x:Double y:Double OR vertex3d x:Double y:Double z:Double")
     val userInput = readLine()?.trim() ?: ""
@@ -200,6 +199,38 @@ fun main() {
                 } else {
                     USER_VERTEX_3D.reset()
                     println("Reset vertex to [0.0, 0.0, 0.0]")
+                }
+            }
+            "translate" -> {
+                if (RUNTIME_VERTEX_TYPE == 0) {
+                    if (parts.size < 3) {
+                        println("Missing translation amounts.")
+                        continue
+                    }
+                    val xs = parts[1].toDoubleOrNull()
+                    val ys = parts[2].toDoubleOrNull()
+                    if (xs == null || ys == null) {
+                        println("Invalid translation amounts.")
+                        continue
+                    }
+                    USER_VERTEX_2D.translate(xs, ys)
+                    var translated = USER_VERTEX_2D.getFormattedVertex()
+                    println("Translated 2d vertex to $translated")
+                } else {
+                    if (parts.size < 4) {
+                        println("Missing translation amounts.")
+                        continue
+                    }
+                    val xs = parts[1].toDoubleOrNull()
+                    val ys = parts[2].toDoubleOrNull()
+                    val zs = parts[3].toDoubleOrNull()
+                    if (xs == null || ys == null || zs == null) {
+                        println("Invalid translation amounts.")
+                        continue
+                    }
+                    USER_VERTEX_3D.translate(xs, ys, zs)
+                    var translated = USER_VERTEX_3D.getFormattedVertex()
+                    println("Translated 3d vertex to $translated")
                 }
             }
             "translate2d" -> {
