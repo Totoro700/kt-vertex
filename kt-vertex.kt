@@ -22,6 +22,11 @@ class Vertex2d(xPos: Double, yPos: Double) {
         y += ys
     }
 
+    fun translateAll(amount: Double) {
+        x += amount
+        y += amount
+    }
+
     fun scale(factor: Double) {
         x *= factor
         y *= factor
@@ -102,6 +107,12 @@ class Vertex3d(xPos: Double, yPos: Double, zPos: Double) {
 
     fun translateZ(zs: Double) {
         z += zs
+    }
+
+    fun translateAll(amount: Double) {
+        x += amount
+        y += amount
+        z += amount
     }
 
     fun scale(factor: Double) {
@@ -352,6 +363,29 @@ fun main() {
 
                     println("Translated 3d vertex to $translated")
                 }
+            }
+            "translateall", "translateAll" -> {
+                if (parts.size < 2) {
+                    println("Missing translation amount.")
+                    continue
+                }
+
+                val amount = parts[1].toDoubleOrNull()
+
+                if (amount == null) {
+                    println("Invalid translation amount.")
+                    continue
+                }
+
+                if (RUNTIME_VERTEX_TYPE == 0) {
+                    USER_VERTEX_2D.translateAll(amount)
+                    var translated = USER_VERTEX_2D.getFormatted()
+                } else {
+                    USER_VERTEX_3D.translateAll(amount)
+                    var translated = USER_VERTEX_2D.getFormatted()
+                }
+
+                println("Translated 2d vertex to $translated")
             }
             "translate2d" -> {
                 if (RUNTIME_VERTEX_TYPE != 0) {
