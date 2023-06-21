@@ -4,7 +4,7 @@ class Vertex2d(xPos: Double, yPos: Double) {
     var y: Double
         get() = field
 
-    fun getFormattedVertex(): String {
+    fun getFormatted(): String {
         return "[" + String.format("%.2f", x).trimEnd('0').trimEnd('.') + ", " + String.format("%.2f", y).trimEnd('0').trimEnd('.') + "]"
     }
 
@@ -23,6 +23,14 @@ class Vertex2d(xPos: Double, yPos: Double) {
 
     fun scale(factor: Double) {
         x *= factor
+        y *= factor
+    }
+
+    fun scaleX(factor: Double) {
+        x *= factor
+    }
+
+    fun scaleY(factor: Double) {
         y *= factor
     }
 
@@ -69,7 +77,7 @@ class Vertex3d(xPos: Double, yPos: Double, zPos: Double) {
     var z: Double
         get() = field
 
-    fun getFormattedVertex(): String {
+    fun getFormatted(): String {
         return "[" + String.format("%.2f", x).trimEnd('0').trimEnd('.') + ", " + String.format("%.2f", y).trimEnd('0').trimEnd('.') + ", " + String.format("%.2f", z).trimEnd('0').trimEnd('.') + "]"
     }
 
@@ -94,6 +102,18 @@ class Vertex3d(xPos: Double, yPos: Double, zPos: Double) {
     fun scale(factor: Double) {
         x *= factor
         y *= factor
+        z *= factor
+    }
+
+    fun scaleX(factor: Double) {
+        x *= factor
+    }
+
+    fun scaleY(factor: Double) {
+        y *= factor
+    }
+
+    fun scaleZ(factor: Double) {
         z *= factor
     }
 
@@ -184,12 +204,79 @@ fun main() {
                 
                 if (RUNTIME_VERTEX_TYPE == 0) {
                     USER_VERTEX_2D.scale(factor)
-                    var scaled = USER_VERTEX_2D.getFormattedVertex()
+                    var scaled = USER_VERTEX_2D.getFormatted()
                     println("Scaling with factor: $factor to $scaled")
                 } else {
                     USER_VERTEX_3D.scale(factor)
-                    var scaled = USER_VERTEX_3D.getFormattedVertex()
+                    var scaled = USER_VERTEX_3D.getFormatted()
                     println("Scaling with factor: $factor to $scaled")
+                }
+            }
+            "scalex", "scaleX", "scale_x", "scale-x" -> {
+                if (parts.size < 2) {
+                    println("Missing factor amount.")
+                    continue
+                }
+                val factor = parts[1].toDoubleOrNull()
+                if (factor == null) {
+                    println("Invalid factor amount.")
+                    continue
+                }
+                
+                if (RUNTIME_VERTEX_TYPE == 0) {
+                    USER_VERTEX_2D.scaleX(factor)
+                    var scaled = USER_VERTEX_2D.getFormatted()
+                    println("Scaling vertex2d's x with factor: $factor to $scaled")
+                } else {
+                    USER_VERTEX_3D.scaleX(factor)
+                    var scaled = USER_VERTEX_3D.getFormatted()
+                    println("Scaling vertex3d's x with factor: $factor to $scaled")
+                }
+            }
+            "scaley", "scaleY", "scale_y", "scale-y" -> {
+                if (parts.size < 2) {
+                    println("Missing factor amount.")
+                    continue
+                }
+                val factor = parts[1].toDoubleOrNull()
+                if (factor == null) {
+                    println("Invalid factor amount.")
+                    continue
+                }
+                
+                if (RUNTIME_VERTEX_TYPE == 0) {
+                    USER_VERTEX_2D.scaleY(factor)
+                    var scaled = USER_VERTEX_2D.getFormatted()
+                    println("Scaling vertex2d's y with factor: $factor to $scaled")
+                } else {
+                    USER_VERTEX_3D.scaleY(factor)
+                    var scaled = USER_VERTEX_3D.getFormatted()
+                    println("Scaling vertex3d's y with factor: $factor to $scaled")
+                }
+            }
+            "scalez", "scaleZ", "scale_z", "scale-z" -> {
+                if (RUNTIME_VERTEX_TYPE == 0) {
+                    println("Runtime vertex is 2d, you need 3d to scale z")
+                    continue
+                }
+                if (parts.size < 2) {
+                    println("Missing factor amount.")
+                    continue
+                }
+                val factor = parts[1].toDoubleOrNull()
+                if (factor == null) {
+                    println("Invalid factor amount.")
+                    continue
+                }
+                
+                if (RUNTIME_VERTEX_TYPE == 0) {
+                    USER_VERTEX_2D.scaleZ(factor)
+                    var scaled = USER_VERTEX_2D.getFormatted()
+                    println("Scaling vertex2d's z with factor: $factor to $scaled")
+                } else {
+                    USER_VERTEX_3D.scaleZ(factor)
+                    var scaled = USER_VERTEX_3D.getFormatted()
+                    println("Scaling vertex3d's z with factor: $factor to $scaled")
                 }
             }
             "reset", "clear" -> {
@@ -214,7 +301,7 @@ fun main() {
                         continue
                     }
                     USER_VERTEX_2D.translate(xs, ys)
-                    var translated = USER_VERTEX_2D.getFormattedVertex()
+                    var translated = USER_VERTEX_2D.getFormatted()
                     println("Translated 2d vertex to $translated")
                 } else {
                     if (parts.size < 4) {
@@ -229,7 +316,7 @@ fun main() {
                         continue
                     }
                     USER_VERTEX_3D.translate(xs, ys, zs)
-                    var translated = USER_VERTEX_3D.getFormattedVertex()
+                    var translated = USER_VERTEX_3D.getFormatted()
                     println("Translated 3d vertex to $translated")
                 }
             }
@@ -249,7 +336,7 @@ fun main() {
                     continue
                 }
                 USER_VERTEX_2D.translate(xs, ys)
-                var translated = USER_VERTEX_2D.getFormattedVertex()
+                var translated = USER_VERTEX_2D.getFormatted()
                 println("Translated 2d vertex to $translated")
             }
             "translate3d" -> {
@@ -269,7 +356,7 @@ fun main() {
                     continue
                 }
                 USER_VERTEX_3D.translate(xs, ys, zs)
-                var translated = USER_VERTEX_3D.getFormattedVertex()
+                var translated = USER_VERTEX_3D.getFormatted()
                 println("Translated 3d vertex to $translated")
             }
             "translateX", "translatex", "trans-x", "trans_x" -> {
@@ -284,11 +371,11 @@ fun main() {
                 }
                 if (RUNTIME_VERTEX_TYPE == 0) {
                     USER_VERTEX_2D.translateX(xs)
-                    var translated = USER_VERTEX_2D.getFormattedVertex()
+                    var translated = USER_VERTEX_2D.getFormatted()
                     println("Translated vertex's x by $xs to $translated")
                 } else {
                     USER_VERTEX_3D.translateX(xs)
-                    var translated = USER_VERTEX_3D.getFormattedVertex()
+                    var translated = USER_VERTEX_3D.getFormatted()
                     println("Translated vertex's x by $xs to $translated")
                 }
             }
@@ -304,17 +391,17 @@ fun main() {
                 }
                 if (RUNTIME_VERTEX_TYPE == 0) {
                     USER_VERTEX_2D.translateY(ys)
-                    var translated = USER_VERTEX_2D.getFormattedVertex()
+                    var translated = USER_VERTEX_2D.getFormatted()
                     println("Translated vertex's y by $ys to $translated")
                 } else {
                     USER_VERTEX_3D.translateY(ys)
-                    var translated = USER_VERTEX_3D.getFormattedVertex()
+                    var translated = USER_VERTEX_3D.getFormatted()
                     println("Translated vertex's y by $ys to $translated")
                 }
             }
             "translateZ", "translatez", "trans-z", "trans_z" -> {
                 if (RUNTIME_VERTEX_TYPE == 0) {
-                    println("Runtime vertex is 2d, to translate z you need a 3d vertex")
+                    println("Runtime vertex is 2d, you need a 3d vertex to translate z")
                 }
                 if (parts.size < 2) {
                     println("Missing translation amount.")
@@ -326,15 +413,15 @@ fun main() {
                     continue
                 }
                 USER_VERTEX_3D.translateZ(zs)
-                var translated = USER_VERTEX_3D.getFormattedVertex()
+                var translated = USER_VERTEX_3D.getFormatted()
                 println("Translated vertex's z by $zs to $translated")
             }
-            "get", "vertex", "formattedvertex", "status" -> {
+            "get", "vertex", "formattedvertex", "status", "vertex2d", "vertex3d", "currentvertex" -> {
                 if (RUNTIME_VERTEX_TYPE == 0) {
-                    var formatted = USER_VERTEX_2D.getFormattedVertex()
+                    var formatted = USER_VERTEX_2D.getFormatted()
                     println("$formatted")
                 } else {
-                    var formatted = USER_VERTEX_3D.getFormattedVertex()
+                    var formatted = USER_VERTEX_3D.getFormatted()
                     println("$formatted")
                 }
             }
