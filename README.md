@@ -67,3 +67,13 @@ Translated 3d vertex to [12, 12, 12]
 `translatey`(both): translates only the y amount
 
 `translatez`(vertex3d only): translates only the z amount
+
+### Other
+
+`get`: gets the current formatted vertex
+aliases: `vertex`, `formattedvertex`, `status`, `vertex2d`, `vertex3d`
+
+`reset`: resets the vertex back to [0, 0] or [0, 0, 0]
+aliases: `clear` (don't mistake this for clearing the terminal)
+
+`exit`: exit (obviously)
