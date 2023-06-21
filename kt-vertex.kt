@@ -39,6 +39,11 @@ class Vertex2d(xPos: Double, yPos: Double) {
     fun scaleY(factor: Double) {
         y *= factor
     }
+    
+    fun setVertex(xpos: Double, ypos: Double) {
+        x = xpos
+        y = ypos
+    }
 
     fun parse(vertex: String): Vertex2d? { // format: "[x, y]" space is optional
         var (cleanX, cleanY) = extractValues(vertex) ?: return null
@@ -131,6 +136,12 @@ class Vertex3d(xPos: Double, yPos: Double, zPos: Double) {
 
     fun scaleZ(factor: Double) {
         z *= factor
+    }
+    
+    fun setVertex(xpos: Double, ypos: Double, zpos: Double) {
+        x = xpos
+        y = ypos
+        z = zpos
     }
 
     fun parse(vertex: String): Vertex3d? { // format: "[x, y, z]" space is optional
@@ -517,6 +528,46 @@ fun main() {
                     var formatted = USER_VERTEX_3D.getFormatted()
 
                     println("$formatted")
+                }
+            }
+            "set" -> {
+                if (RUNTIME_VERTEX_TYPE == 0) {
+                    if (parts.size < 3) {
+                        println("Missing set amounts.")
+                        continue
+                    }
+
+                    val xs = parts[1].toDoubleOrNull()
+                    val ys = parts[2].toDoubleOrNull()
+
+                    if (xs == null || ys == null) {
+                        println("Invalid set amounts.")
+                        continue
+                    }
+
+                    USER_VERTEX_2D.set(xs, ys)
+                    var formatted = USER_VERTEX_2D.getFormatted()
+
+                    println("Set 2d vertex to $formatted")
+                } else {
+                    if (parts.size < 4) {
+                        println("Missing set amounts.")
+                        continue
+                    }
+
+                    val xs = parts[1].toDoubleOrNull()
+                    val ys = parts[2].toDoubleOrNull()
+                    val zs = parts[3].toDoubleOrNull()
+
+                    if (xs == null || ys == null || zs == null) {
+                        println("Invalid set amounts.")
+                        continue
+                    }
+
+                    USER_VERTEX_3D.set(xs, ys, zs)
+                    var formatted = USER_VERTEX_3D.getFormatted()
+
+                    println("Set 3d vertex to $formatted")
                 }
             }
             "exit" -> {
