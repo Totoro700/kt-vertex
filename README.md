@@ -68,6 +68,22 @@ Translated 3d vertex to [12, 12, 12]
 
 `translatez`(vertex3d only): translates only the z amount
 
+### Setting
+
+`set`(both): sets the vertex to specific amount
+
+if original is [10, 10, 10]
+```
+> set 1 2 3
+Set 3d vertex to [1, 2, 3]
+```
+
+`setx`(both): sets x of vertex
+
+`sety`(both): sets y of vertex
+
+`setz`(vertex3d only): sets z of vertex
+
 ### Other
 
 `get`: gets the current formatted vertex

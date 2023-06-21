@@ -390,13 +390,15 @@ fun main() {
 
                 if (RUNTIME_VERTEX_TYPE == 0) {
                     USER_VERTEX_2D.translateAll(amount)
+
                     var translated = USER_VERTEX_2D.getFormatted()
+                    println("Translated 2d vertex to $translated")
                 } else {
                     USER_VERTEX_3D.translateAll(amount)
-                    var translated = USER_VERTEX_2D.getFormatted()
-                }
 
-                println("Translated 2d vertex to $translated")
+                    var translated = USER_VERTEX_3D.getFormatted()
+                    println("Translated 3d vertex to $translated")
+                }
             }
             "translate2d" -> {
                 if (RUNTIME_VERTEX_TYPE != 0) {
@@ -545,7 +547,7 @@ fun main() {
                         continue
                     }
 
-                    USER_VERTEX_2D.set(xs, ys)
+                    USER_VERTEX_2D.setVertex(xs, ys)
                     var formatted = USER_VERTEX_2D.getFormatted()
 
                     println("Set 2d vertex to $formatted")
@@ -564,11 +566,83 @@ fun main() {
                         continue
                     }
 
-                    USER_VERTEX_3D.set(xs, ys, zs)
+                    USER_VERTEX_3D.setVertex(xs, ys, zs)
                     var formatted = USER_VERTEX_3D.getFormatted()
 
                     println("Set 3d vertex to $formatted")
                 }
+            }
+            "setx", "setX", "set_x", "set-x" -> {
+                if (parts.size < 2) {
+                    println("Missing set amount.")
+                    continue
+                }
+
+                val xs = parts[1].toDoubleOrNull()
+
+                if (xs == null) {
+                    println("Invalid set amount.")
+                    continue
+                }
+                
+                if (RUNTIME_VERTEX_TYPE == 0) {
+                    USER_VERTEX_2D.x = xs
+
+                    var formatted = USER_VERTEX_2D.getFormatted()
+                    println("Set vertex2d's x to $formatted")
+                } else {
+                    USER_VERTEX_3D.x = xs
+
+                    var formatted = USER_VERTEX_3D.getFormatted()
+                    println("Set vertex3d's x to $formatted")
+                }
+            }
+            "sety", "setY", "set_y", "set-y" -> {
+                if (parts.size < 2) {
+                    println("Missing set amount.")
+                    continue
+                }
+                val ys = parts[1].toDoubleOrNull()
+
+                if (ys == null) {
+                    println("Invalid set amount.")
+                    continue
+                }
+                
+                if (RUNTIME_VERTEX_TYPE == 0) {
+                    USER_VERTEX_2D.y = ys
+
+                    var formatted = USER_VERTEX_2D.getFormatted()
+                    println("Set vertex2d's y to $formatted")
+                } else {
+                    USER_VERTEX_3D.y = ys
+
+                    var formatted = USER_VERTEX_3D.getFormatted()
+                    println("Set vertex3d's y to $formatted")
+                }
+            }
+            "setz", "setZ", "set_z", "set-z" -> {
+                if (RUNTIME_VERTEX_TYPE == 0) {
+                    println("Runtime vertex is 2d, you need 3d to set z")
+                    continue
+                }
+
+                if (parts.size < 2) {
+                    println("Missing set amount.")
+                    continue
+                }
+
+                val zs = parts[1].toDoubleOrNull()
+
+                if (zs == null) {
+                    println("Invalid set amount.")
+                    continue
+                }
+                
+                USER_VERTEX_3D.z = zs
+
+                var formatted = USER_VERTEX_3D.getFormatted()
+                println("Set vertex3d's z to $formatted")
             }
             "exit" -> {
                 System.exit(0)
