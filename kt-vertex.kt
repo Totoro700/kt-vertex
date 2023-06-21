@@ -644,6 +644,9 @@ fun main() {
                 var formatted = USER_VERTEX_3D.getFormatted()
                 println("Set vertex3d's z to $formatted")
             }
+            "github", "git", "repo", "src", "source" -> {
+                println("https://github.com/Totoro700/kt-vertex")
+            }
             "exit" -> {
                 System.exit(0)
             }

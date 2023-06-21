@@ -92,4 +92,7 @@ aliases: `vertex`, `formattedvertex`, `status`, `vertex2d`, `vertex3d`
 `reset`: resets the vertex back to [0, 0] or [0, 0, 0]
 aliases: `clear` (don't mistake this for clearing the terminal)
 
+`github`: github repo link
+aliases: `github`, `git`, `repo`, `src`, `source`
+
 `exit`: exit (obviously)
